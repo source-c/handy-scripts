@@ -1,2 +1,3 @@
-# handy-scripts
+= handy-scripts
+
 Handy scripts for bash shell
