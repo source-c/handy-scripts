@@ -40,8 +40,8 @@ DEVICE="${DEVICE:-/dev/random}"            # device to get a chunks from
 NA=0
 PWD=""
 while [ "${N}" -gt 0 ]; do
-                ALL=$(head -c "${NC}" "${DEVICE}")
-                let "NA = NA + ${#ALL}"
+    ALL=$(head -c "${NC}" "${DEVICE}")
+    let "NA = NA + ${#ALL}"
     NEW=$(echo -E "${ALL}" | tr -d -c "${SET}" 2>&- | head -c "${N}")
     PWD="${PWD}${NEW}"
     let "N = N - ${#NEW}"
