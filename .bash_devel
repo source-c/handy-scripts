@@ -1,0 +1,40 @@
+# just source this file into your .bashrc by
+#   . ${HOME}/.bash_devel
+# or
+#   [ -f ${HOME}/.bash_devel ] && source ${HOME}/.bash_devel
+
+if [ -f /etc/bash_completion ] ||\
+   [ -f /usr/local/etc/bash_completion ]; then
+
+PROJ_DIR=${HOME}/myProjects
+
+# files are excluded
+# directories prefixed by _ are excluded too
+
+function _goproj_completion() {
+    local cur prev projects
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    projects=$(cd ${PROJ_DIR} && echo [^_]*/*/)
+
+    COMPREPLY=( $(compgen -W "${projects}" -- ${cur}) )
+
+    return 0
+}
+
+complete -F _goproj_completion goproj
+
+# call `goproj` + <tab> from command line
+# to bring your shell into the project's dir
+# from everywhere
+
+function goproj(){
+  cd ${PROJ_DIR}/$1
+}
+
+# also, define startup config for your Python
+
+export PYTHONSTARTUP=${HOME}/.pythonrc
+
+fi
