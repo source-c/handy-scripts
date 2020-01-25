@@ -37,10 +37,18 @@ This program will attempt to search through all system shared libraries
 for a specific symbol.  This is useful when trying to compile something
 and the compiler complains about an undefined reference similar to this:
 
-/tmp/ccabcdef.o(.text+0x7): undefined reference to \`foo'
+  /tmp/ccabcdef.o(.text+0x7): undefined reference to \`printf'
 
 Running \`findsym' would try to locate the symbol foo and indicate
-what library you should be linking with.
+what library you should be linking with:
+
+  $ findsym printf
+
+    /lib32/libc.so.6: 000509a0 T printf
+    /lib/i386-linux-gnu/libc.so.6: 000509e0 T printf
+    /libx32/libc.so.6: 0004bb50 T printf
+    /lib/x86_64-linux-gnu/libc.so.6: 0000000000054b40 T printf
+    /usr/lib32/libasan.so.4: 000770a0 W printf
 
 Usage: $PROG [options] <symbol>...
 
