@@ -1,0 +1,108 @@
+#!/bin/sh -efu
+
+PROG=findsym
+
+info()
+{
+	printf %s\\n "$PROG: $*" >&2
+}
+
+fatal()
+{
+	printf %s\\n "$PROG: $*" >&2
+	exit 1
+}
+
+show_usage()
+{
+	[ -z "$*" ] || info "$*"
+	echo "Try \`$PROG --help' for more information." >&2
+	exit 1
+}
+
+print_version()
+{
+	cat <<EOF
+$PROG version 1.2
+EOF
+	exit
+}
+
+show_help()
+{
+	cat <<EOF
+$PROG - search through all system shared libraries for a specific symbol.
+
+This program will attempt to search through all system shared libraries
+for a specific symbol.  This is useful when trying to compile something
+and the compiler complains about an undefined reference similar to this:
+
+/tmp/ccabcdef.o(.text+0x7): undefined reference to \`foo'
+
+Running \`findsym' would try to locate the symbol foo and indicate
+what library you should be linking with.
+
+Usage: $PROG [options] <symbol>...
+
+Options:
+  -C, --demangle[=style]    demangle symbol names;
+  -V, --version             print program version and exit;
+  -h, --help                show this text and exit.
+
+EOF
+	exit
+}
+
+TEMP=`getopt -n $PROG -o C,h,V -l demangle::,help,version -- "$@"` ||
+	show_usage
+eval set -- "$TEMP"
+
+demangle=
+while :; do
+	case "$1" in
+		--) shift; break
+			;;
+		-C)
+			demangle='-C'
+			;;
+		--demangle)
+			shift; demangle="--demangle=$1"
+			;;
+		-h|--help) show_help
+			;;
+		-V|--version) print_version
+			;;
+		*) fatal "Unrecognized option: $1"
+			;;
+	esac
+	shift
+done
+
+# At least one argument, please.
+[ "$#" -ge 1 ] ||
+	show_usage 'Not enough arguments.'
+
+IFS='
+'
+/sbin/ldconfig -p |
+	sed -ne 's/^.\+=>[[:space:]]\+\([^[:space:]]\+\)[[:space:]]*$/\1/p' |
+	sort -u |
+	xargs -r nm -gD ${demangle} -- 2>/dev/null |
+		LC_ALL=C sed -e 's/^\([0-9a-f]\+\)\?[[:space:]]\+\([A-Za-z]\)[[:space:]]\+\([^[:space:]]\)/\1\t\2\t\3/' |
+		LC_ALL=C awk "-vr=$IFS" "-vs=$*" '
+BEGIN {
+	FS="\t"
+	OFS=" "
+	f=""
+	split(s,a,r)
+}
+(NF==0) {f=""}
+(NF==1) {f=$1}
+((NF==3) && (f!="") && ($2~/^[A-Za-z]$/) && ($1~/^[0-9a-f]+$/)) {
+	for(e in a)
+		if($3==a[e]) {
+			$1=$1
+			printf("%s %s\n",f,$0)
+		}
+}
+'
