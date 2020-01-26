@@ -1,3 +1,26 @@
 = handy-scripts
 
-Handy scripts for bash shell
+Handy scripts for bash shell el Co
+
+== Bash
+
+=== Shell environment
+
+- `.bash_colors` -- source/include for `.bashrc` to enable enhanced coloring support
+- `.bash_devel` -- source/include for `.bashrc` to enable project navigation and setup development environment
+
+=== Tools
+
+- `password-gen` -- command-line tool to generate random passwords
+- `findsym` -- command-line tool to search through all system shared libraries
+for a specific symbol
+
+== Python
+
+=== Python env
+
+- `.pythonrc` -- include for python interactive mode to enable some useful hooks like auto-completion etc
+
+== License
+
+MIT LICENSE WITHOUT WARRANTY OF ANY KIND
