@@ -14,7 +14,7 @@ Handy scripts for bash shell el Co
 - `password-gen` -- command-line tool to generate random passwords
 - `findsym` -- command-line tool to search through all system shared libraries
 for a specific symbol
-- `slide-show` -- (recursive) slide show from JPEG & PNG collection using MPV
+- `slide-show` -- (recursive) slide show for JPEG/PNG collection using MPV
 
 == Python
 
