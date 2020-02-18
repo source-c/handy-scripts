@@ -39,7 +39,7 @@ and the compiler complains about an undefined reference similar to this:
 
   /tmp/ccabcdef.o(.text+0x7): undefined reference to \`printf'
 
-Running \`findsym' would try to locate the symbol foo and indicate
+Running \`findsym' would try to locate the provided symbol and indicate
 what library you should be linking with:
 
   $ findsym printf
