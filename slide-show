@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# example:
+#   slide-show ~ 5 --random-sort
+
+PLAYER="mpv"
+PLAYER_TIMEOUT=${2:-5}
+PLAYER_ARGS="-fs --playlist=- --image-display-duration=${PLAYER_TIMEOUT}"
+IMG_FINDER="find"
+IMG_FINDER_ARGS="-type f -iname '*.jp*g' -o -iname '*.png'"
+IMG_SORTER="sort"
+IMG_SORTER_ARGS=${3:-"-u"}
+
+PLAYER_PATH=$(which ${PLAYER})
+if [ ! -x ${PLAYER_PATH} ]; then
+    echo "MPV executable not found. Exiting..."
+    exit 1
+fi
+
+eval "${IMG_FINDER} ${1:-.} ${IMG_FINDER_ARGS} | ${IMG_SORTER} ${IMG_SORTER_ARGS} | ${PLAYER} ${PLAYER_ARGS}"
