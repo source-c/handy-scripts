@@ -7,7 +7,7 @@ PLAYER="mpv"
 PLAYER_TIMEOUT=${2:-5}
 PLAYER_ARGS="-fs --playlist=- --image-display-duration=${PLAYER_TIMEOUT}"
 IMG_FINDER="find"
-IMG_FINDER_ARGS="-type f -iname '*.jp*g' -o -iname '*.png'"
+IMG_FINDER_ARGS="-type f -iname '*.jp*g' -o -iname '*.png' -o -iname '*.gif'"
 IMG_SORTER="sort"
 IMG_SORTER_ARGS=${3:-"-u"}
 
