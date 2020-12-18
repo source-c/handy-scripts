@@ -37,4 +37,8 @@ function goproj(){
 
 export PYTHONSTARTUP=${HOME}/.pythonrc
 
+# in order to use ncurses' prompt with gnupg for pkg signing
+GPG_TTY=$(tty)
+export GPG_TTY
+
 fi
