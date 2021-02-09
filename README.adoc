@@ -9,7 +9,7 @@ Handy scripts for bash shell el Co
 - `.bash_colors` -- source/include for `.bashrc` to enable enhanced coloring support
 - `.bash_devel` -- source/include for `.bashrc` to enable project navigation and setup development environment
 
-=== Projects competions
+=== Project path completions
 
 `.bash_devel` brings a new handy method to mavigate your projects in quick and efficient manner - `goproj` from everyvere.
 
