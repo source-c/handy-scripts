@@ -14,7 +14,7 @@ Handy scripts for bash shell el Co
 `.bash_devel` brings a new handy method to navigate your projects in quick and efficient manner - `goproj` from everyvere.
 
 The method expects you store your projects inside of `~/myProjects` folder and may navigate up to 3 levels down in it.
-Dirs marked by leading underscore (i.e. `_skip_this_`) and projects not containing `.git` are skipped automatically.
+Dirs marked by leading underscore (i.e. `_skip_this`) and projects not containing `.git` are skipped automatically.
 
 === Tools
 
