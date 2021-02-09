@@ -13,11 +13,18 @@ PROJ_DIR=${HOME}/myProjects
 # directories prefixed by _ are excluded too
 
 function _goproj_completion() {
-    local cur prev projects
+    local cur prev projects all_list
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    projects=$(cd ${PROJ_DIR} && echo [^_]*/*/*)
+
+    all_list=$(cd ${PROJ_DIR} && echo [^_]* [^_]*/* [^_]*/*/*)
+
+    projects=''
+
+    for i in ${all_list}; do
+        [ -d ${PROJ_DIR}/${i}/.git ] && projects="${projects} ${i}"
+    done
 
     COMPREPLY=( $(compgen -W "${projects}" -- ${cur}) )
 
