@@ -1,0 +1,6 @@
+#/usr/bin/env bash
+
+current_if=$(scutil --dns|awk '/if_index/ { gsub("[()]", "", $4); print $4; exit;}')
+if_info=$(networksetup -listnetworkserviceorder | egrep "${current_if}[ )]")
+if_name=$(echo ${if_info} | sed 's/.*Hardware Port: \(.*\),.*/\1/')
+[ -z "${if_name}" ] && echo '-' || echo ${if_name}
